@@ -175,12 +175,12 @@ Note that
 If you don't have this structure (one of the list elements is not a record),
 then the stuff is not displayed as a table but as a list:
 
-> [{a: 1, b:2}, {a: 1, b: 7, c:6}, [7]]
-╭───┬───────────────────╮
-│ 0 │ {record 2 fields} │
-│ 1 │ {record 3 fields} │
-│ 2 │ [list 1 item]     │
-╰───┴───────────────────╯
+    > [{a: 1, b:2}, {a: 1, b: 7, c:6}, [7]]
+    ╭───┬───────────────────╮
+    │ 0 │ {record 2 fields} │
+    │ 1 │ {record 3 fields} │
+    │ 2 │ [list 1 item]     │
+    ╰───┴───────────────────╯
 
 So tables are not a first-class citizen: they are a kind of list that happen
 to match a minimal structure.
