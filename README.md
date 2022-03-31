@@ -40,9 +40,9 @@ is for a large what makes a programming language a shell langage IMHO!).
 There is a missing data type, whose single instance is accessible via the
 special variable named `nothing`. 
 
-> $nothing
-> $nothing |
-nothing
+    > $nothing
+    > $nothing |
+    nothing
 
 But `nothing` itself is not a literal:
 
