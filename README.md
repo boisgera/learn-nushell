@@ -148,6 +148,6 @@ Consider
 What are the valid identifiers? Apparently we can have some pretty wild 
 identifiers with symbols in them:
 
-   > let x= = 1
-   > echo $x=
-   1
+    > let x= = 1
+    > echo $x=
+    1
