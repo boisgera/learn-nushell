@@ -41,7 +41,7 @@ There is a missing data type, whose single instance is accessible via the
 special variable named `nothing`. 
 
     > $nothing
-    > $nothing |
+    > $nothing | describe
     nothing
 
 But `nothing` itself is not a literal:
