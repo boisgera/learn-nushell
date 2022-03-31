@@ -51,7 +51,7 @@ in this regard.
 
 Or equivalently
 
-    > [true, 1, 3.14, "Hello!"] | each { |it| $it | describe}
+    > [true, 1, 3.14, "Hello!"] | each {|it| $it | describe}
     ╭───┬────────╮
     │ 0 │ bool   │
     │ 1 │ int    │
