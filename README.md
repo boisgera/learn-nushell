@@ -37,6 +37,27 @@ is for a large what makes a programming language a shell langage IMHO!).
 
 (explore with `describe`).
 
+There is a missing data type, whose single instance is accessible via the
+special variable named `nothing`. 
+
+> $nothing
+> $nothing |
+nothing
+
+But `nothing` itself is not a literal:
+
+    > nothing
+    Error: nu::shell::external_command (link)
+
+    × External command
+    ╭─[entry #1:1:1]
+    1 │ nothing
+    · ───┬───
+    ·    ╰── can't run executable
+    ╰────
+    help: No such file or directory (os error 2)
+
+
 Atomic types (`bool`, `int`, `float` `string`, etc.) work pretty much as you expect
 in this regard.
 
@@ -100,6 +121,70 @@ Tables are actually lists:
     > [[a b]; [1 2] [3 4]] | describe
     list<unknown>
 
+So, yes, tables are lists of stuff of unknown type are are not say, 
+lists of records of a known type, so not *really* a dataframe: in a given
+column you can have different types for example:
+
+    > [[a b]; [1 true] [3.1 "Hello!"]]
+    ╭───┬──────┬────────╮
+    │ # │  a   │   b    │
+    ├───┼──────┼────────┤
+    │ 0 │    1 │ true   │
+    │ 1 │ 3.10 │ Hello! │
+    ╰───┴──────┴────────╯
+
+You get the record (and its type) only when you effectively get the data from
+the table:
+
+    > [[a b]; [1 true] [3.1 "Hello!"]] | get 0
+    ╭───┬──────╮
+    │ a │ 1    │
+    │ b │ true │
+    ╰───┴──────╯
+    > [[a b]; [1 true] [3.1 "Hello!"]] | get 0 | describe
+    record<a: int, b: bool>
+
+So a table is a list of records; if the type of the record values are not
+consistent this is not a problem and if the key do not correspond, this
+is simply treated as missing data (type `nothing`):
+
+    > [{a: 1, b:2}, {a: 1, b: 7}]               03/31/2022 10:59:34 AM
+    ╭───┬───┬───╮
+    │ # │ a │ b │
+    ├───┼───┼───┤
+    │ 0 │ 1 │ 2 │
+    │ 1 │ 1 │ 7 │
+    ╰───┴───┴───╯
+    > [{a: 1, b:2}, {a: 1, b: 7, c:6}]          03/31/2022 11:01:54 AM
+    ╭───┬───┬───┬────╮
+    │ # │ a │ b │ c  │
+    ├───┼───┼───┼────┤
+    │ 0 │ 1 │ 2 │ ❎ │
+    │ 1 │ 1 │ 7 │  6 │
+    ╰───┴───┴───┴────╯
+
+Note that
+
+    > [{a: 1, b:2}, {a: 1, b: 7, c:6}] | get c.1
+    6
+    > [{a: 1, b:2}, {a: 1, b: 7, c:6}] | get c.0
+    > [{a: 1, b:2}, {a: 1, b: 7, c:6}] | get c.0 | describe
+    nothing
+
+
+If you don't have this structure (one of the list elements is not a record),
+then the stuff is not displayed as a table but as a list:
+
+> [{a: 1, b:2}, {a: 1, b: 7, c:6}, [7]]
+╭───┬───────────────────╮
+│ 0 │ {record 2 fields} │
+│ 1 │ {record 3 fields} │
+│ 2 │ [list 1 item]     │
+╰───┴───────────────────╯
+
+So tables are not a first-class citizen: they are a kind of list that happen
+to match a minimal structure.
+
 "Classic" lists are actually the same thing as 1d tables with the empty string 
 as a column name:
 
@@ -115,6 +200,8 @@ as a column name:
     │ 1 │ 2 │
     │ 2 │ 3 │
     ╰───┴───╯
+
+
 
 ### ⚠️ Spaces matter
 
