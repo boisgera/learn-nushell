@@ -1,19 +1,6 @@
 # Learn Nushell
 
-#### Survival kit
-
-Help:
-
-    > help
-    > help commands
-    > help <command name>
-
-Types
-
-    > echo 3
-    int
-    > echo 3.14 | describe
-    float
+ - [Getting started](getting-started.md)
 
 ### Literals
 
