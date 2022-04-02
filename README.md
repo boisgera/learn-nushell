@@ -1,6 +1,6 @@
 # Learn Nushell
 
- - [Getting started](getting-started.md)
+ - [Getting Started](getting-started.md)
 
 ### Literals
 
